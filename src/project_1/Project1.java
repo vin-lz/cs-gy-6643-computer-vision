@@ -13,6 +13,7 @@ public class Project1 {
         for (String fileName : FILENAMES) {
             // Read image file
             image = readImage(fileName);
+            System.out.println(fileName);
             // Convert to grayscale
             image = convertToGrayScale(image);
             // Generate magnitude distribution of all pixels
@@ -42,6 +43,7 @@ public class Project1 {
             }
             // Write image
             writeImage(image, fileName);
+            System.out.println("-------------");
         }
     }
 
