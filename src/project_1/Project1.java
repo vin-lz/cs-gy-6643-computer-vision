@@ -1,19 +1,22 @@
 package project_1;
-
+import java.util.*;
 import java.io.File;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
+import java.awt.Color;
+import java.util.HashSet;
 import javax.imageio.ImageIO;
 
 public class Project1 {
-    private final static String[] FILENAMES = {"data13", "fruits2b", "tiger1"};
-//    private final static String[] FILENAMES = {"allblack"};
+    private final static String[] FILENAMES = {"data13", "fruits2b", "tiger1-24bits"};
+    private final static int[][] DIMENSIONS = {{320, 240}, {484, 363}, {690, 461}};
+//    private final static String[] FILENAMES = {"tiger1"};
     public static void main(String[] args) {
         BufferedImage image = null;
-        for (String fileName : FILENAMES) {
+        for (int i = 0; i < FILENAMES.length; i++) {
             // Read image file
-            image = readImage(fileName);
-            System.out.println(fileName);
+            image = readImage(FILENAMES[i], DIMENSIONS[i][0], DIMENSIONS[i][1]);
+            System.out.println(FILENAMES[i]);
             // Convert to grayscale
             image = convertToGrayScale(image);
             // Generate magnitude distribution of all pixels
@@ -23,9 +26,9 @@ public class Project1 {
             // modify image according to the threshold
             int width = image.getWidth();
             int height = image.getHeight();
-            int t1 = (thresholds[0]<<16)|(thresholds[0]<<8)|thresholds[0];
-            int t2 = (thresholds[1]<<16)|(thresholds[1]<<8)|thresholds[1];
-            int t3 = (thresholds[2]<<16)|(thresholds[2]<<8)|thresholds[2];
+            int t1 = (thresholds[0]<<16)|(thresholds[0]<<8)|(thresholds[0]<<0);
+            int t2 = (thresholds[1]<<16)|(thresholds[1]<<8)|(thresholds[1]<<0);
+            int t3 = (thresholds[2]<<16)|(thresholds[2]<<8)|(thresholds[2]<<0);
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
                     int p = image.getRGB(x, y);
@@ -42,15 +45,18 @@ public class Project1 {
                 }
             }
             // Write image
-            writeImage(image, fileName);
+            writeImage(image, FILENAMES[i]);
             System.out.println("-------------");
         }
     }
 
-    private static BufferedImage readImage(String fileName) {
+    private static BufferedImage readImage(String fileName, int width, int height) {
+        BufferedImage image = null;
         try {
             File inputFile = new File("src/project_1/" + fileName + ".bmp");
-            BufferedImage image = ImageIO.read(inputFile);
+            image = new BufferedImage(width, height,
+                    BufferedImage.TYPE_INT_RGB);
+            image = ImageIO.read(inputFile);
             return image;
         } catch (IOException e) {
             System.out.println("Error: " + e);
@@ -69,11 +75,33 @@ public class Project1 {
                 int p = image.getRGB(x, y);
                 int r = (p>>16)&0xff;
                 int g = (p>>8)&0xff;
-                int b = p&0xff;
+                int b = (p>>0)&0xff;
                 int gray = (int)Math.round(0.299 * r + 0.587 * g + 0.114 * b);
-                p = (gray<<16)|(gray<<8)|gray;
-//                System.out.println(p);
+                p = (gray<<16)|(gray<<8)|(gray<<0);
                 image.setRGB(x, y, p);
+                Color clr = new Color(image.getRGB(x,y));
+                p = clr.getRGB();
+//                System.out.println(Integer.toBinaryString(r) + " " + Integer.toBinaryString(g) + " " + Integer.toBinaryString(b));
+                String binaryString = String.format("%32s", Integer.toBinaryString(p)).replace(' ', '0');
+                Set<String> set = new HashSet<>();
+                set.add(binaryString.substring(24,32));
+                set.add(binaryString.substring(8,16));
+                set.add(binaryString.substring(16,24));
+                if (set.size() != 1) {
+                    System.out.println("PRE!!!" + binaryString.substring(0,8) + "!!" + binaryString.substring(8,16) + "!!" + binaryString.substring(16,24) + "!!" + binaryString.substring(24,32));
+                }
+
+//                int pp = image.getRGB(x, y);
+//                String binaryStringAfter = String.format("%24s", Integer.toBinaryString(pp)).replace(' ', '0');
+//                Set<String> set = new HashSet<>();
+//                set.add(binaryStringAfter.substring(0,8));
+//                set.add(binaryStringAfter.substring(8,16));
+//                set.add(binaryStringAfter.substring(16,24));
+//                if (set.size() != 1) {
+//                    System.out.println("PRE!!!" + binaryString.substring(0,8) + "!!" + binaryString.substring(8,16) + "!!" + binaryString.substring(16,24) + "\nPOST!!" + binaryStringAfter.substring(0,8) + "!!" + binaryStringAfter.substring(8,16) + "!!" + binaryStringAfter.substring(16,24));
+//                } else {
+//                    System.out.println("##" + binaryString.substring(0,8) + "#" + binaryString.substring(8,16) + "#" + binaryString.substring(16,24));
+//                }
             }
         }
         return image;
