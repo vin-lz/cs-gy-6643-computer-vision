@@ -1,5 +1,3 @@
-package project_1;
-
 import java.io.File;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
@@ -30,7 +28,7 @@ public class Project1 {
         BufferedImage image = null;
         try {
             // Read in the image
-            File inputFile = new File("src/project_1/" + fileName + ".bmp");
+            File inputFile = new File(fileName + ".bmp");
             image = new BufferedImage(width, height,
                     BufferedImage.TYPE_INT_RGB);
             image = ImageIO.read(inputFile);
@@ -84,7 +82,7 @@ public class Project1 {
 
         try {
             // Write the image into file
-            File file = new File("src/project_1/" + fileName + "_out.bmp");
+            File file = new File(fileName + "_out.bmp");
             ImageIO.write(image, "bmp", file);
             System.out.println(fileName + "_out.bmp is written");
         } catch (IOException e) {

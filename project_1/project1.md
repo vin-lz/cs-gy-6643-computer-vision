@@ -1,5 +1,11 @@
-package project_1;
+# CS-GY 6643 Project 1: Extended Otsu's method
 
+By Vin Liu zl1477
+
+---
+## Code:
+You could also find this code in the file `Project1.java`.
+```
 import java.io.File;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
@@ -30,7 +36,7 @@ public class Project1 {
         BufferedImage image = null;
         try {
             // Read in the image
-            File inputFile = new File("src/project_1/" + fileName + ".bmp");
+            File inputFile = new File(fileName + ".bmp");
             image = new BufferedImage(width, height,
                     BufferedImage.TYPE_INT_RGB);
             image = ImageIO.read(inputFile);
@@ -84,7 +90,7 @@ public class Project1 {
 
         try {
             // Write the image into file
-            File file = new File("src/project_1/" + fileName + "_out.bmp");
+            File file = new File(fileName + "_out.bmp");
             ImageIO.write(image, "bmp", file);
             System.out.println(fileName + "_out.bmp is written");
         } catch (IOException e) {
@@ -163,3 +169,47 @@ public class Project1 {
         return thresholds;
     }
 }
+```
+---
+## How to run
+   1. Please make sure `Project1.java` is in the same folder with `fruits2b.bmp`, `data13.bmp`, and `tiger1-24bits.bmp`.
+   2. Run the following commands in your terminal:
+   
+    javac Project1.java 
+
+    java Project1
+
+---
+## Results and outputs
+### For `fruits2b.bmp`:
+![fruits2b_out.bmp](fruits2b_out.bmp)
+
+t1 = 88
+
+t2 = 141
+
+t3 = 173
+
+---
+### For `data13.bmp`:
+![data13_out.bmp](data13_out.bmp)
+
+t1 = 77
+
+t2 = 155
+
+t3 = 222
+
+---
+### For `tiger1-24bits.bmp`:
+![tiger1-24bits_out.bmp](tiger1-24bits_out.bmp)
+
+t1 = 50
+
+t2 = 111
+
+t3 = 179
+
+---
+### Screenshot of the overall results:
+![screenshot of the overall results](screenshot.png)
