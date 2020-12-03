@@ -38,16 +38,20 @@ def read_images(dataset: dict) -> np.ndarray:
 
 
 def calculate_mean_face(dataset: np.ndarray) -> np.ndarray:
-    mean = dataset.mean(axis=1).reshape(HEIGHT, WIDTH)
-    plt.imshow(mean, cmap="gray")
+    mean = dataset.mean(axis=1).reshape(HEIGHT * WIDTH, 1)
+    mean_face_image = mean_face.reshape(HEIGHT, WIDTH)
+    plt.imshow(mean_face_image, cmap="gray")
     plt.show()
+    plt.imsave("mean_face.jpg", mean_face_image, cmap="gray")
     return mean
 
+
+def save_image()
 
 training_data = read_images(TRAINING_DATASET)
 print(training_data)
 testing_data = read_images(TESTING_DATASET)
 print(testing_data)
 mean_face = calculate_mean_face(training_data)
-plt.imsave("mean_face.jpg", mean_face, cmap="gray")
+
 
