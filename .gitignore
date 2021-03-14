@@ -34,3 +34,18 @@ src/project_1/fruits2b_out.bmp
 src/project_1/tiger1_out.bmp
 .DS_Store
 
+.vscode
+.idea/
+out/
+src/
+cs-gy-6643-computer-vision.iml
+project_2/venv/
+project_2/Face dataset/
+project_2/eigenface_subject01.normal.jpg
+project_2/eigenface_subject02.normal.jpg
+project_2/eigenface_subject03.normal.jpg
+project_2/eigenface_subject07.normal.jpg
+project_2/eigenface_subject10.normal.jpg
+project_2/eigenface_subject11.normal.jpg
+project_2/eigenface_subject14.normal.jpg
+project_2/eigenface_subject15.normal.jpg
